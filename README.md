@@ -4,8 +4,8 @@ This is a barebones docker file for running Logitech Media Server in Docker.  Cu
 ## Docker-Compose file
 ```
   lms:
-    container_name: logitech_media_server
-    image: fuzzymistborn/logitech_media_server:latest
+    container_name: lms
+    image: fuzzymistborn/lms:latest
     volumes:
       - ./lms/data:/var/lib/squeezeboxserver
       - ./lms/logs:/var/log/squeezeboxserver
