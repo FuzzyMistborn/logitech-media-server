@@ -24,6 +24,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install \
 EXPOSE 3483 3483/udp 9000 9090
 
 COPY entrypoint.sh /
+RUN chmod +x entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "" ]
