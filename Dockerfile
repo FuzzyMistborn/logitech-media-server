@@ -14,6 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install \
       sox \
       wget \
       libio-socket-ssl-perl \
+      libcrypt-openssl-rsa-perl \
       libnet-ssleay-perl \
     && \
     rm -rf /var/lib/apt/lists/* && \
