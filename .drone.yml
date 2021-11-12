@@ -9,7 +9,7 @@ name: Docker Build
 #  - weekly
 
 steps:
-- name: DockerHub  
+- name: DockerHub (main)
   image: plugins/docker
   settings:
     username: fuzzymistborn
@@ -21,7 +21,7 @@ steps:
     branch:
     - main
 
-- name: GH Container Registry  
+- name: GH Container Registry (main)
   image: plugins/docker
   settings:
     username: fuzzymistborn
@@ -34,7 +34,7 @@ steps:
     branch:
     - main
 
-- name: DockerHub
+- name: DockerHub (dev)
   image: plugins/docker
   settings:
     username: fuzzymistborn
@@ -46,7 +46,7 @@ steps:
     branch:
     - dev
 
-- name: GH Container Registry
+- name: GH Container Registry (dev)
   image: plugins/docker
   settings:
     username: fuzzymistborn
