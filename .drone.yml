@@ -2,11 +2,11 @@ kind: pipeline
 type: docker
 name: Docker Build
 
-#trigger:
-#  event:
-#  - cron
-#  cron:
-#  - weekly
+trigger:
+  event:
+  - cron
+  cron:
+  - weekly
 
 steps:
 - name: DockerHub (main)
@@ -69,10 +69,10 @@ steps:
     format: markdown
     message: >
       {{#success build.status}}
-        ✅  Build for `{{repo.name}}` on {{commit.branch}} was *successful*!
+        ✅  Build for `{{repo.name}}` on branch `{{commit.branch}}` was *successful*!
         🌐  [Output]({{build.link}})
       {{else}}
-        ❌  Build for `{{repo.name}}` on {{commit.branch}} has *FAILED*!
+        ❌  Build for `{{repo.name}}` on branch `{{commit.branch}}` has *FAILED*!
         🌐  [Output]({{build.link}})
       {{/success}}
   when:
