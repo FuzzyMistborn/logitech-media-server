@@ -1,0 +1,79 @@
+kind: pipeline
+type: docker
+name: Docker Build
+
+#trigger:
+#  event:
+#  - cron
+#  cron:
+#  - weekly
+
+steps:
+- name: DockerHub  
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/lms
+    tags: latest
+  when:
+    branch:
+    - main
+
+- name: GH Container Registry  
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/lms
+    registry: ghcr.io
+    tags: latest
+  when:
+    branch:
+    - main
+
+- name: DockerHub
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: dockerhub_pw
+    repo: fuzzymistborn/lms
+    tags: dev
+  when:
+    branch:
+    - dev
+
+- name: GH Container Registry
+  image: plugins/docker
+  settings:
+    username: fuzzymistborn
+    password:
+      from_secret: ghcr_pw
+    repo: ghcr.io/fuzzymistborn/lms
+    registry: ghcr.io
+    tags: dev
+  when:
+    branch:
+    - dev
+
+- name: Send TG Notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: tg_token
+    to:
+      from_secret: tg_id
+    format: markdown
+    message: >
+      {{#success build.status}}
+        ✅  Build for `{{repo.name}}` on {{commit.branch}} was *successful*!
+        🌐  [Output]({{build.link}})
+      {{else}}
+        ❌  Build for `{{repo.name}}` on {{commit.branch}} has *FAILED*!
+        🌐  [Output]({{build.link}})
+      {{/success}}
+  when:
+    status: [ success, failure ]
