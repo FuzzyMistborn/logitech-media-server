@@ -1,5 +1,19 @@
 FROM debian:bullseye-slim
 
+ARG BUILD_DATE
+ARG VCS_REF
+
+LABEL \
+  maintainer="FuzzyMistborn <fuzzy@fuzzymistborn.com>" \
+  architecture="amd64/x86_64" \
+  lms-version="8.2" \
+  org.opencontainers.image.title="logitech-media-server" \
+  org.opencontainers.image.authors="FuzzyMistborn <fuzzy@fuzzymistborn.com>" \
+  org.opencontainers.image.description="For running Logitech Media Server" \
+  org.opencontainers.image.source="https://github.com/FuzzyMistborn/logitech-media-server" \
+  org.opencontainers.image.revision=$VCS_REF \
+  org.opencontainers.image.created=$BUILD_DATE
+
 SHELL [ "/bin/bash", "-c" ]
 
 ENV LANG=C.UTF-8 \
