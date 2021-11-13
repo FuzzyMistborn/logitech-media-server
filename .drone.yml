@@ -2,6 +2,13 @@ kind: pipeline
 type: docker
 name: Docker Build (main)
 
+trigger:
+  event:
+  - cron
+  - custom
+  cron:
+  - weekly
+
 volumes:
 - name: docker_sock
   host:
@@ -25,11 +32,6 @@ steps:
     - docker build -t fuzzymistborn/lms:latest -t fuzzymistborn/lms:$LMS_VER -t ghcr.io/fuzzymistborn/lms:latest -t ghcr.io/fuzzymistborn/lms:$LMS_VER .
     - docker push --all-tags fuzzymistborn/lms
     - docker push --all-tags ghcr.io/fuzzymistborn/lms
-  when:
-    event:
-    - cron
-    cron:
-    - weekly
 
 - name: Send TG Notification
   image: appleboy/drone-telegram
@@ -42,10 +44,6 @@ steps:
     message: "{{#success build.status}}✅  Build for `{{repo.name}}` was *successful*!{{else}}❌  Build for `{{repo.name}}` has *FAILED*!{{/success}} \n🌐  [Output]({{build.link}})\n📝  Commit: {{ commit.message }}"
   when:
     status: [ success, failure ]
-    event:
-    - cron
-    cron:
-    - weekly
 
 kind: pipeline
 type: docker
