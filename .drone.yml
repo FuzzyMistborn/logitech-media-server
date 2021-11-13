@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: Docker Build
+name: Docker Build (main)
 
 volumes:
 - name: docker_sock
@@ -31,6 +31,33 @@ steps:
     cron:
     - weekly
 
+- name: Send TG Notification
+  image: appleboy/drone-telegram
+  settings:
+    token:
+      from_secret: tg_token
+    to:
+      from_secret: tg_id
+    format: markdown
+    message: "{{#success build.status}}✅  Build for `{{repo.name}}` was *successful*!{{else}}❌  Build for `{{repo.name}}` has *FAILED*!{{/success}} \n🌐  [Output]({{build.link}})\n📝  Commit: {{ commit.message }}"
+  when:
+    status: [ success, failure ]
+  when:
+    event:
+    - cron
+    cron:
+    - weekly
+
+kind: pipeline
+type: docker
+name: Docker Build (dev)
+
+volumes:
+- name: docker_sock
+  host:
+    path: /var/run/docker.sock
+
+steps:
 - name: Build and push release (dev)
   image: fuzzymistborn/docker-alpine-skopeo:latest
   environment:
@@ -62,3 +89,5 @@ steps:
     message: "{{#success build.status}}✅  Build for `{{repo.name}}` was *successful*!{{else}}❌  Build for `{{repo.name}}` has *FAILED*!{{/success}} \n🌐  [Output]({{build.link}})\n📝  Commit: {{ commit.message }}"
   when:
     status: [ success, failure ]
+    branch:
+    - dev
