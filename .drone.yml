@@ -42,7 +42,6 @@ steps:
     message: "{{#success build.status}}✅  Build for `{{repo.name}}` was *successful*!{{else}}❌  Build for `{{repo.name}}` has *FAILED*!{{/success}} \n🌐  [Output]({{build.link}})\n📝  Commit: {{ commit.message }}"
   when:
     status: [ success, failure ]
-  when:
     event:
     - cron
     cron:
