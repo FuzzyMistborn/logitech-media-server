@@ -45,6 +45,7 @@ steps:
   when:
     status: [ success, failure ]
 
+---
 kind: pipeline
 type: docker
 name: Docker Build (dev)
