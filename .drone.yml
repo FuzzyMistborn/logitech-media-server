@@ -5,7 +5,6 @@ name: Docker Build (main)
 trigger:
   event:
   - cron
-  - custom
   cron:
   - weekly
 
