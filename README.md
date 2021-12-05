@@ -14,3 +14,5 @@ This is a barebones docker file for running Logitech Media Server in Docker.  Cu
     network_mode: host
 ```
 
+### If you appreciate my work, please consider buying me a beer (or coffee, or whatever)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E5796VZ)
