@@ -32,7 +32,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -y install \
       libnet-ssleay-perl \
     && \
     rm -rf /var/lib/apt/lists/* && \
-    curl -Lsf -o /tmp/logitechmediaserver.deb "${base_url}"$(curl -Lsf "${base_url}index.php?ver=8.2" | awk -F'"' '/_amd64.deb/ { print $2}') && \
+    curl -Lsf -o /tmp/logitechmediaserver.deb "${base_url}"$(curl -Lsf "${base_url}index.php?ver=8.3" | awk -F'"' '/_amd64.deb/ { print $2}') && \
     DEBIAN_FRONTEND=noninteractive dpkg -i /tmp/logitechmediaserver.deb && \
     rm -f /tmp/logitechmediaserver.deb
 
